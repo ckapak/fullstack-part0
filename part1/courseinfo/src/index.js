@@ -1,24 +1,69 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+// the goal is to refactor the data provided into a React project with components
+
+import React from 'react'
+import ReactDOM from 'react-dom'
 
 const App = () => {
   const course = 'Half Stack application development'
-  const part1 = 'Fundamentals of React'
-  const exercises1 = 10
-  const part2 = 'Using props to pass data'
-  const exercises2 = 7
-  const part3 = 'State of a component'
-  const exercises3 = 14
+  const parts = [
+    {
+      name: 'Fundamentals of React',
+      exercises: 10
+    }, {
+      name: 'Using props to pass data',
+      exercises: 7
+    }, {
+      name: 'State of a component',
+      exercises: 14
+    }
+  ]
+
+  const Header = ({ course }) => {
+    return (
+      <div>
+        <h1>{course}</h1>
+      </div>
+    )
+  }
+
+  // Part is a child component which will go inside Content
+  // Pass through data in the parameter
+  // Part and exercises are the only pieces of data required to pass through
+  const Part = ({ part, exercises }) => {
+    return (
+      <div>
+        {part} {exercises}
+      </div>
+    )
+  }
+
+  // Content is a component
+  // Part is the child within Content
+  // in step 4 no need to go through the arrays using loops
+  const Content = ({ parts }) => {
+    // console.log(parts.length)
+    // console.log(parts[0].name)
+    return (
+      <>
+        <Part part={parts[0].name} exercises={parts[0].exercises} />
+        <Part part={parts[1].name} exercises={parts[1].exercises} />
+        <Part part={parts[2].name} exercises={parts[2].exercises} />
+      </>
+    )
+  }
+
+  const Total = ({ parts }) => {
+    // console.log(parts[0].exercises)
+    return (
+      <p>Number of exercises {parts[0].exercises + parts[1].exercises + parts[2].exercises}</p>
+    )
+  }
 
   return (
     <div>
       <Header course={course} />
-      <Content
-        {part1} {exercises1}
-        {part2} {exercises2}
-        {part3} {exercises3}
-      />
-      <Total Number of exercises = {exercises1 + exercises2 + exercises3} />
+      <Content parts={parts}/>
+      <Total parts={parts} />
     </div>
   )
 }
