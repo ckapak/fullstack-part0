@@ -1,14 +1,31 @@
-// expand the following app by adding a button that can be clicked to display a random anecdote
+// Expand your application so that you can vote for the displayed anecdote.
+
+// 1
+// need a separate handleVote button
+// +1 to each anecdote when someone clicks on it
+// need to store the votes of each anecdote into an array in the component's state
+// the correct way of updating state is to make a copy of the state
 
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
 const App = (props) => {
   const [selected, setSelected] = useState(0)
+  const [voted, setVoted] = useState(new Array(anecdotes.length).fill(0))
 
+
+ // generates a random anecdote 
 const handleClick = () => {
   const randomNumber = Math.floor(Math.random() * anecdotes.length)
   setSelected(randomNumber)
+}
+
+// votes for an anecdote
+const handleVote = () => {
+  console.log('clicked')
+  const copy = [ ...voted]
+  copy[selected] += 1
+  setVoted(copy)
 }
 
   return (
@@ -16,6 +33,7 @@ const handleClick = () => {
       {props.anecdotes[selected]}
       <hr />
       <button onClick={handleClick}>Next Anecdote</button>
+      <button onClick={handleVote}>Vote</button>
     </div>
   )
 }
