@@ -9,10 +9,15 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
+const Anecdote = ({ anecdote }) => 
+  <p>{anecdote}</p>;
+
+const Votes = ({ votes }) => 
+  <p>has {votes} votes </p>
+
 const App = (props) => {
   const [selected, setSelected] = useState(0)
-  const [voted, setVoted] = useState(new Array(anecdotes.length).fill(0))
-
+  const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0))
 
  // generates a random anecdote 
 const handleClick = () => {
@@ -23,14 +28,15 @@ const handleClick = () => {
 // votes for an anecdote
 const handleVote = () => {
   console.log('clicked')
-  const copy = [ ...voted]
+  const copy = [ ...votes]
   copy[selected] += 1
-  setVoted(copy)
+  setVotes(copy)
 }
 
   return (
     <div>
-      {props.anecdotes[selected]}
+      <Anecdote anecdote={anecdotes[selected]} />
+      <Votes votes ={votes[selected]} />
       <hr />
       <button onClick={handleClick}>Next Anecdote</button>
       <button onClick={handleVote}>Vote</button>
