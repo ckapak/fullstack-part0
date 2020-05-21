@@ -1,45 +1,48 @@
-// Expand your application so that you can vote for the displayed anecdote.
-
-// 1
-// need a separate handleVote button
-// +1 to each anecdote when someone clicks on it
-// need to store the votes of each anecdote into an array in the component's state
-// the correct way of updating state is to make a copy of the state
-
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-const Anecdote = ({ anecdote }) => 
-  <p>{anecdote}</p>;
+const Anecdote = ({ anecdote }) =>
+  <p>{anecdote}</p>
 
-const Votes = ({ votes }) => 
+const Votes = ({ votes }) =>
   <p>has {votes} votes </p>
 
-const App = (props) => {
+const App = () => {
   const [selected, setSelected] = useState(0)
+
+  // setup an array to the length of anecdotes, when .fill gets passed an object it
+  // will copy the reference and fill the modifed array with references to that object
   const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0))
 
- // generates a random anecdote 
-const handleClick = () => {
-  const randomNumber = Math.floor(Math.random() * anecdotes.length)
-  setSelected(randomNumber)
-}
+  // generates a random anecdote 
+  const handleClick = () => {
+    const randomNumber = Math.floor(Math.random() * anecdotes.length)
+    setSelected(randomNumber)
+  }
 
-// votes for an anecdote
-const handleVote = () => {
-  console.log('clicked')
-  const copy = [ ...votes]
-  copy[selected] += 1
-  setVotes(copy)
-}
+  // votes for an anecdote
+  const handleVote = () => {
+    console.log('clicked')
+    const copy = [...votes]
+    copy[selected] += 1
+    setVotes(copy)
+  }
+
+  // find the anecdote with the most votes
+  const mostVotes = Math.max(...votes)
+  const winningAnecdote = anecdotes[votes.indexOf(mostVotes)]
 
   return (
     <div>
+      <h1>Anecdote of the Day</h1>
       <Anecdote anecdote={anecdotes[selected]} />
-      <Votes votes ={votes[selected]} />
+      <Votes votes={votes[selected]} />
       <hr />
       <button onClick={handleClick}>Next Anecdote</button>
       <button onClick={handleVote}>Vote</button>
+      <h1>Anecdote with most votes</h1>
+      <Anecdote anecdote={winningAnecdote} />
+      <Votes votes={mostVotes} />
     </div>
   )
 }
