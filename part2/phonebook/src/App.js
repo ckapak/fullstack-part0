@@ -10,7 +10,7 @@ const App = () => {
     e.preventDefault()
     // console.log('button clicked', e.target)
     const personObject = {
-      content: newName,
+      name: newName,
       id: persons.length + 1,
     }
     setPersons(persons.concat(personObject))
@@ -22,6 +22,9 @@ const App = () => {
     setNewName(e.target.value)
   }
 
+  if (persons.some(e => e.name === newName)) {
+    alert(`${newName} is already added to phonebook.`)
+  }
 
   return (
     <div>
@@ -38,7 +41,7 @@ const App = () => {
       <ul>
         {persons.map(person =>
           <div key={person.id} >
-            {person.content} </ div>
+            {person.name} </ div>
         )}
       </ul>
     </div>
