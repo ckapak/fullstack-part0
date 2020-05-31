@@ -22,12 +22,33 @@ const App = () => {
 
   const showCountries = () => {
     if (filteredCountries.length > 10) {
-      return 'Too many matches'
+      return <p>Too many matches</p>
+    } else if (filteredCountries.length > 1) {
+      return (
+        <div>
+          {filteredCountries.map(country => (
+            <p key={country.alpha2Code}>{country.name}</p>
+          ))}
+        </div>
+      )
+    } else if (filteredCountries.length === 1) {
+      return (
+        <div>
+          <h1>{filteredCountries[0].name}</h1>
+          <img src={filteredCountries[0].flag} alt='' />
+          <p>capital: {filteredCountries[0].capital}</p>
+          <p>population:{filteredCountries[0].population}</p>
+          <h2>Languages</h2>
+          <ul>
+            {filteredCountries[0].languages.map(lang => (
+              <li key={lang.name}>{lang.name}</li>
+            ))}
+          </ul>
+        </div>
+      )
+    } else {
+      return <p>No results</p>
     }
-
-    return filteredCountries.map((country) =>
-      <p key={country.alpha2Code}>{country.name}</p>
-    )
   }
 
   const searchHandler = (e) => {
@@ -38,7 +59,8 @@ const App = () => {
     <div>
       <h1>Countries</h1>
       find countries: <input
-        onChange={searchHandler} />
+        onChange={searchHandler}
+      />
       {showCountries()}
     </div>
   )
