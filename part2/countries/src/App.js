@@ -13,6 +13,10 @@ const App = () => {
       })
   }, [])
 
+  const searchHandler = (e) => {
+    setSearchFilter(e.target.value)
+  }
+
   const filteredCountries =
     searchFilter.length === 1
       ? countries
@@ -21,21 +25,19 @@ const App = () => {
       )
 
   const showCountries = () => {
+
+    if (!filteredCountries.length) {
+      return <p>No results</p>
+    }
+
     if (filteredCountries.length > 10) {
       return <p>Too many matches</p>
-    } else if (filteredCountries.length > 1) {
-      return (
-        <div>
-          {filteredCountries.map(country => (
-            <p key={country.alpha2Code}>{country.name}</p>
-          ))}
-        </div>
-      )
-    } else if (filteredCountries.length === 1) {
+    }
+
+    if (filteredCountries.length === 1) {
       return (
         <div>
           <h1>{filteredCountries[0].name}</h1>
-          <img src={filteredCountries[0].flag} alt='' />
           <p>capital: {filteredCountries[0].capital}</p>
           <p>population:{filteredCountries[0].population}</p>
           <h2>Languages</h2>
@@ -44,15 +46,17 @@ const App = () => {
               <li key={lang.name}>{lang.name}</li>
             ))}
           </ul>
+          <img src={filteredCountries[0].flag} alt="country flag" width="200" height="150" />
         </div>
       )
-    } else {
-      return <p>No results</p>
     }
-  }
 
-  const searchHandler = (e) => {
-    setSearchFilter(e.target.value)
+    return (
+      filteredCountries.map(country => (
+        <div key={country.alpha2Code}>{country.name}
+          <button value={country.name} onClick={searchHandler}>show</button></div>
+      ))
+    )
   }
 
   return (
