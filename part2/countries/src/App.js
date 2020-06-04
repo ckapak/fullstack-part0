@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import Weather from './components/Weather'
 
 const App = () => {
   const [countries, setCountries] = useState([])
@@ -24,6 +25,7 @@ const App = () => {
         (country) => country.name.toLowerCase().indexOf(searchFilter.toLowerCase()) > -1
       )
 
+
   const showCountries = () => {
 
     if (!filteredCountries.length) {
@@ -47,6 +49,7 @@ const App = () => {
             ))}
           </ul>
           <img src={filteredCountries[0].flag} alt="country flag" width="200" height="150" />
+          <Weather capital={filteredCountries[0].capital} />
         </div>
       )
     }
